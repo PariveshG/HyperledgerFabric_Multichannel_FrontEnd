@@ -32,7 +32,7 @@ const tradeID = this.state.tradeID;
 const fromParty = this.state.fromParty;
 const toParty =this.state.toParty;
 const amount = this.state.amount;
-const status =this.state.status;
+const status ='Created';
 const username =this.state.username;
 
 const data = {
@@ -41,8 +41,8 @@ const data = {
 }
 
 if(username=='Jim' && fromParty=='Org1' || username=='Barry' && fromParty=='Org2' || username=='Parivesh' && fromParty=='Org3' ){
-  axios.post('http://52.78.0.153:4000/channels/channelall/chaincodes/mycc', { fcn: 'createCar',
-     args: [ tradeID, fromParty, 'Org1 Org2 Org3', amount, status ],
+  axios.post('http://54.180.32.186:4000/channels/channelall/chaincodes/mycc', { fcn: 'createCar',
+     args: [ tradeID, fromParty, 'Org1 Org2 Org3', amount, 'Created' ],
      username: username,
      orgName: fromParty },).then(res => {
         console.log(res);
@@ -100,8 +100,15 @@ if(username=='Jim' && fromParty=='Org1' || username=='Barry' && fromParty=='Org2
               </div>
               <div className="form-group">
               <label for="Status">Status</label>
-                <input type="text" name="status" value={this.state.status} onChange={this.datChange.bind(this)} className="form-control" />
-              </div>
+			  <select class="custom-select custom-select-sm">
+				<option name="Status --" value={this.state.status} onChange={this.datChange.bind(this)}>Created</option>
+				</select>     
+                           </div>
+						
+				<div>
+				&nbsp;
+				&nbsp;
+				</div>
               <div className="form-group">
                 <button  className="btn btn-dark" >Submit</button>
                

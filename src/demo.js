@@ -5,11 +5,19 @@ import axios from 'axios';
   
 class Demo extends Component {  
 
-state = { users: [] };
- 
+
+
+  constructor(props) 
+    { 
+        super(props); 
+  this.state = { users: [] };
+        
+  
+           } 
+
   componentDidMount() {
-	  
-    fetch("http://52.78.0.153:4000/channels/channelall/chaincodes/mycc?peer=peer0.org3.example.com&fcn=queryAllTrades&args=%5B%22a%22%5D&username=Jim&orgName=Org1", {
+	 
+    fetch(`http://54.180.32.186:4000/channels/channelall/chaincodes/mycc?peer=peer0.org3.example.com&fcn=queryAllTrades&args=%5B%22a%22%5D&username=${this.props.name}&orgName=Org1`, {
   method: 'GET',
   headers: {  
     'X-Mashape-Key': 'required',
@@ -40,11 +48,12 @@ state = { users: [] };
 	 
     return (  
 	
-         
+	  <div>
     <MaterialTable 
       title="Results"
       columns={columns}
       data={this.state.users}
+	   
       editable={{
         onRowAdd: newData =>
           new Promise(resolve => {
@@ -54,7 +63,7 @@ state = { users: [] };
                 const users = [...prevState.users];
                 users.push(newData);
 				console.log(newData.Record.tradeID);
-				 axios.post('http://52.78.0.153:4000/channels/channelall/chaincodes/mycc', { fcn: 'createCar',
+				 axios.post('http://54.180.32.186:4000/channels/channelall/chaincodes/mycc', { fcn: 'createCar',
      args: [ newData.Record.tradeID, newData.Record.fromParty, newData.Record.toParty, newData.Record.amount, newData.Record.status ],
      username: 'Jim',
      orgName: 'Org1' },).then(res => {
@@ -76,8 +85,8 @@ state = { users: [] };
 				   const users = [...prevState.users];
                   users[users.indexOf(oldData)] = newData;
 				  const vg = Object.values(newData);
-				  				  
-				  axios.post('http://52.78.0.153:4000/channels/channelall/chaincodes/mycc', { fcn: 'updateStatus',
+				  				  if(vg[1].status !== 'Received'){throw 'Unknown Status'};
+				  axios.post('http://54.180.32.186:4000/channels/channelall/chaincodes/mycc', { fcn: 'updateStatus',
      args: [ vg[0],vg[1].status],
      username: 'Jim',
      orgName: 'Org1' },).then(res => {
@@ -103,7 +112,8 @@ state = { users: [] };
           }),
       }}
     />
-      
+       const name = {this.props.name};
+	   </div>
     )  
   }  
 }  

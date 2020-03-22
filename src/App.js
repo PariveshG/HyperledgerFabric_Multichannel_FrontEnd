@@ -8,13 +8,14 @@ import Createkyc from "./createkyc";
 import CreateTrade from "./createTrade";
 import MyRouter from "./myrouter";
 import Button from '@material-ui/core/Button';
+import Login from "./Login";
 
 function App() {
   
   return (
     <div>
+< Login />
 
-< MyRouter />
     </div>
  
   );
@@ -23,6 +24,7 @@ function App() {
 export default App;
 
 // <!--
+//
 // <Searchbar />  
 // <FormCdn />
  

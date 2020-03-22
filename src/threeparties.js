@@ -3,7 +3,7 @@ import MaterialTable from 'material-table';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
   
-class TwoParties extends Component {  
+class ThreeParties extends Component {  
 
   constructor(props) 
     { 
@@ -15,7 +15,7 @@ class TwoParties extends Component {
  
   componentDidMount() {
 	  
-    fetch(`http://54.180.32.186:4000/channels/channel12/chaincodes/mycc?peer=peer0.${this.props.party.toLowerCase()}.example.com&fcn=queryAllTrades&args=%5B%22a%22%5D&username=${this.props.name}&orgName=${this.props.party}`, {
+    fetch(`http://54.180.32.186:4000/channels/channelall/chaincodes/mycc?peer=peer0.${this.props.party.toLowerCase()}.example.com&fcn=queryAllTrades&args=%5B%22a%22%5D&username=${this.props.name}&orgName=${this.props.party}`, {
   method: 'GET',
   headers: {  
     'X-Mashape-Key': 'required',
@@ -39,7 +39,7 @@ class TwoParties extends Component {
       { title: 'ToParties', field: 'Record.toParty', editable: 'never' },
 	  { title: 'Amount', field: 'Record.amount', editable: 'never' },
 	  { title: 'Created Time', field: 'Record.ctime', editable: 'never' },
-   	  { title: 'Status', field: 'Record.status',},
+   	  { title: 'Status', field: 'Record.status', editable: 'never'},
 	  ]  
 	 
     return (  
@@ -58,7 +58,7 @@ class TwoParties extends Component {
                 const users = [...prevState.users];
                 users.push(newData);
 				console.log(newData.Record.tradeID);
-				 axios.post('http://54.180.32.186:4000/channels/channel12/chaincodes/mycc', { fcn: 'createCar',
+				 axios.post('http://54.180.32.186:4000/channels/channelall/chaincodes/mycc', { fcn: 'createCar',
      args: [ newData.Record.tradeID, newData.Record.fromParty, newData.Record.toParty, newData.Record.amount, newData.Record.status ],
      username: 'Jim',
      orgName: 'Org1' },).then(res => {
@@ -80,14 +80,15 @@ class TwoParties extends Component {
 				   const users = [...prevState.users];
                   users[users.indexOf(oldData)] = newData;
 				  const vg = Object.values(newData);
-				 				  	 
-				  axios.post('http://54.180.32.186:4000/channels/channel12/chaincodes/mycc', { fcn: 'updateStatus',
+				  		if(vg[1].status !== 'Received' && vg[1].status == 'Created'){throw 'Unknown Status'};	  
+				  axios.post('http://54.180.32.186:4000/channels/channelall/chaincodes/mycc', { fcn: 'updateStatus',
      args: [ vg[0],vg[1].status],
      username: this.props.name,
      orgName: this.props.party },).then(res => {
-     
+      //  console.log(res);
+      //  console.log(res.data);
 		alert("Successfully Update Record");
-						}) 
+      })
                   return { ...prevState, users };
                 });
               }
@@ -100,4 +101,4 @@ class TwoParties extends Component {
     )  
   }  
 }  
-export default TwoParties; 
+export default ThreeParties; 

@@ -9,7 +9,8 @@ import CreateTrade from "./createTrade";
 import CreateTwoTrade from "./createtwotrade";
 import Demo from './demo';
 import TwoParties from './twoparties';
-class myrouter extends React.Component{
+import SearchTradeBar from './SearchTradeBar' ;
+class myrouterfortwo extends React.Component{
  
  constructor(props) 
     { 
@@ -25,17 +26,15 @@ class myrouter extends React.Component{
    
     <ul>
         <li><Link id="link" to='/createtwotrade'>Trade</Link></li>
-		<li><Link id="link" to='/createTrade'>TradeForAll</Link></li>
-        <li><Link id="link1" to='/dashboardall'>DashBoardAll</Link></li>
+		      
 		<li><Link id="link1" to='/twoparties'>DashBoard</Link></li>
-       
+        <li><Link id="link1" to='/searchTrade'>Search Trade</Link></li>
         
     </ul>
-	<Route  path='/createtwotrade' component={CreateTwoTrade}></Route>
-    <Route  path='/createTrade' component={CreateTrade}></Route>
-    <Route  path='/dashboardall' component={() => <Demo name={this.props.name} />}></Route>
-	<Route  path='/twoparties' component={TwoParties}></Route>
- 
+	<Route  path='/createtwotrade' component={() => <CreateTwoTrade name={this.props.name} party={this.props.party}/>}></Route>
+	<Route  path='/twoparties' component={() => <TwoParties name={this.props.name} party={this.props.party}/>}></Route>
+	<Route  path='/searchTrade' component={() => <SearchTradeBar name={this.props.name} party={this.props.party}/>}></Route>
+	
 </Router>
 
 
@@ -44,4 +43,4 @@ class myrouter extends React.Component{
 }
 // <li><Link id="link" to='/kycreate'>Create KYC</Link></li>
  //  <Route  path='/kycreate' component={CreateKYC}></Route>
-export default myrouter;
+export default myrouterfortwo;

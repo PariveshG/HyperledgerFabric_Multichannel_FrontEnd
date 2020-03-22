@@ -6,7 +6,7 @@ import './formcdn.css';
 
  // const data = [{"Key":"Trade7", "Record":{"tradeID":"Trade7","fromParty":"PartyA","toParty":"PartyB","amount":200,"status":"Submitted","ctime":"2020-02-12 04:50:14"}},{"Key":"Trade8", "Record":{"tradeID":"Trade8","fromParty":"PartyA","toParty":"PartyB","amount":200,"status":"Submitted","ctime":"2020-02-12 04:50:32"}}]
 
-class CreateTwoTrade extends React.Component {
+class CreateThreeTrade extends React.Component {
 	state = { users: [] };
     constructor(props) {
         super(props)
@@ -39,18 +39,16 @@ const username =this.props.name;
 
 
 
-if(username=='Jim' && fromParty=='Org1'|| username=='Barry'){
-  axios.post('http://54.180.32.186:4000/channels/channel12/chaincodes/mycc', { fcn: 'createCar',
-     args: [ tradeID, fromParty, 'Org1 Org2', amount, status ],
+
+  axios.post('http://54.180.32.186:4000/channels/channelall/chaincodes/mycc', { fcn: 'createCar',
+     args: [ tradeID, fromParty, 'Org1 Org2 Org3', amount, status ],
      username: username,
      orgName: fromParty },).then(res => {
         console.log(res);
         console.log(res.data);
 		alert("Success");
       })
-}else{
-	alert("Please try again. Provided credentials are wrong.");
-}
+
 }
 
        handleSubmit = event => {
@@ -67,7 +65,7 @@ if(username=='Jim' && fromParty=='Org1'|| username=='Barry'){
     return(
       <div className="container">
      <br></br>
-        <h4>Trade For Two Parties</h4>
+        <h4>Trade For Three Parties</h4>
 		<br></br>
         <div className="row">
           <div className="col-sm-3">
@@ -82,7 +80,7 @@ if(username=='Jim' && fromParty=='Org1'|| username=='Barry'){
                 <label for="ToParties">ToParties</label>
 				<select class="custom-select custom-select-sm">
 			<option selected>Select Parties</option>
-			<option name="ToParty" value={this.state.toParty} onChange={this.datChange.bind(this)}>Org1 Org2</option>
+			<option name="ToParty" value={this.state.toParty} onChange={this.datChange.bind(this)}>Org1 Org2 Org3</option>
 			</select>                
 				</div>
               <div className="form-group">
@@ -114,4 +112,4 @@ if(username=='Jim' && fromParty=='Org1'|| username=='Barry'){
   }
 }
 
-export default CreateTwoTrade;
+export default CreateThreeTrade;
